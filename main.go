@@ -159,11 +159,13 @@ func main() {
 
 	// launch the hub routine which is the singleton for the websocket server
 	go h.run()
-	go startRotondeClient("localhost:4224")
+	go startRotondeClient("ws://localhost:4224/")
 	// launch our serial port routine
 	go sh.run()
 	// launch our dummy data routine
 	//go d.run()
+
+	log.Println("pouet")
 
 	// TODO uncomment and add conditional server and client connections
 	http.HandleFunc("/", homeHandler)
