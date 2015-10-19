@@ -10,7 +10,6 @@ import (
 	"net/http"
 	//"path/filepath"
 	"errors"
-	"fmt"
 	"net"
 	"os"
 	//"net/http/pprof"
@@ -159,17 +158,20 @@ func main() {
 
 	// launch the hub routine which is the singleton for the websocket server
 	go h.run()
+	go startRotondeClient("localhost:4224")
 	// launch our serial port routine
 	go sh.run()
 	// launch our dummy data routine
 	//go d.run()
 
-	http.HandleFunc("/", homeHandler)
+	// TODO uncomment and add conditional server and client connections
+	/*http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ws", wsHandler)
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		fmt.Printf("Error trying to bind to port: %v, so exiting...", err)
 		log.Fatal("Error ListenAndServe:", err)
-	}
+	}*/
+	select {}
 
 }
 
