@@ -165,8 +165,6 @@ func main() {
 	// launch our dummy data routine
 	//go d.run()
 
-	log.Println("pouet")
-
 	// TODO uncomment and add conditional server and client connections
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ws", wsHandler)
