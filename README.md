@@ -1,3 +1,9 @@
+Rotonde fork
+====
+
+This fork brings compatibility with rotonde, and cleans the API in the process.
+All features from the excellent [SPJS](https://github.com/johnlauer/serial-port-json-server) are now available through rotonde in a clean json API.
+
 serial-port-json-server
 =======================
 Version 1.85
