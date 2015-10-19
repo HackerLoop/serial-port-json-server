@@ -130,7 +130,7 @@ func init() {
 	addCmdAction("list", *list)
 
 	open := &rotonde.Definition{Identifier: "SERIAL_OPEN", Type: "action"}
-	open.PushField("device", "string", "")
+	open.PushField("port", "string", "")
 	open.PushField("baudrate", "number", "")
 	open.PushField("buffer", "string", "")
 	addCmdAction("open", *open)
@@ -333,7 +333,6 @@ loop:
 					continue
 				}
 
-				log.Println("######", string(json))
 				err = c.ws.WriteMessage(websocket.TextMessage, json)
 				if err != nil {
 					log.Println(err)

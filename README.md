@@ -12,6 +12,7 @@ Actions
 
 This modules exposes the following actions:
 
+SERIAL_LIST tells the server to send a list of available serial ports
 ```
 {  
    "type":"def",
@@ -23,6 +24,9 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_OPEN opens the given device at the given baudrat and buffer
+algorithm.
+TODO: explain buffer algorithms
 ```
 {  
    "type":"def",
@@ -31,7 +35,7 @@ This modules exposes the following actions:
       "type":"action",
       "fields":[  
          {  
-            "name":"device",
+            "name":"port",
             "type":"string",
             "units":""
          },
@@ -50,6 +54,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_SENDJSON: TODO link to documentation in SPJS
 ```
 {  
    "type":"def",
@@ -67,6 +72,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_SEND: send a string to a given port
 ```
 {  
    "type":"def",
@@ -89,6 +95,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_SENDJSON: TODO link to documentation in SPJS
 ```
 {  
    "type":"def",
@@ -111,6 +118,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_CLOSE closes the connection to a port
 ```
 {  
    "type":"def",
@@ -128,6 +136,8 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_BUFFERALGORITHMS lists the available buffer algorithms
+TODO link to documentation in SPJS
 ```
 {  
    "type":"def",
@@ -145,6 +155,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_BAUDRATES lists the available baudrates
 ```
 {  
    "type":"def",
@@ -156,6 +167,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_RESTART triggers a restart (?)
 ```
 {  
    "type":"def",
@@ -167,6 +179,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_EXIT exits the server
 ```
 {  
    "type":"def",
@@ -178,6 +191,7 @@ This modules exposes the following actions:
 }
 ```
 
+TODO link to documentation in SPJS
 ```
 {  
    "type":"def",
@@ -200,6 +214,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_MEMSTATS returns the memstat object
 ```
 {  
    "type":"def",
@@ -211,6 +226,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_VERSION ask the server to send a SERIAL_VERSION event
 ```
 {  
    "type":"def",
@@ -222,6 +238,7 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_HOSTNAME ask the server to send SERIAL_HOSTNAME event
 ```
 {  
    "type":"def",
@@ -233,6 +250,8 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_PROGRAM programs an arduino
+TODO link to documentation in SPJS
 ```
 {  
    "type":"def",
@@ -260,6 +279,8 @@ This modules exposes the following actions:
 }
 ```
 
+SERIAL_PROGRAM programs an arduino from an URL
+TODO link to documentation in SPJS
 ```
 {  
    "type":"def",
