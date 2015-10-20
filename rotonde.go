@@ -18,11 +18,31 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
+/**
+ * This translates the SPJS API to the rotonde API
+ * SPJS uses a mix of text commands as actions, and JSON objects as events.
+ *
+ * The idea is to first create definitions for all available actions and events,
+ * and then match them with what is going through.
+ *
+ * For text command actions, we just match a rotonde action to a SPJS command,
+ * each fields of the action will be listed as command parameters.
+ *
+ * For a json event, it is a little more complicated as SPJS objects doesn't provide a type field.
+ * so the idea is to match each json event to definitions based on the fields.
+ * This is the reason some definitions will not have all the fields, I just added those that were
+ * always present. Or just enough to match.
+ */
+
+/**
+ * This struct is made to match SPJS command names to a rotonde definition
+ */
 type cmdActionDefinition struct {
 	name       string
 	definition rotonde.Definition
 }
 
+// Generates a cmd from an object received from rotonde
 func (c *cmdActionDefinition) toCmd(params map[string]interface{}) []byte {
 	buf := bytes.NewBufferString(c.name)
 	for _, field := range c.definition.Fields {
@@ -44,6 +64,7 @@ func (c *cmdActionDefinition) toCmd(params map[string]interface{}) []byte {
 	return buf.Bytes()
 }
 
+// oops, this one is useless, keeping it just in case..
 func (c *cmdActionDefinition) toAction(cmd []byte) *rotonde.Action {
 	s := string(cmd[:])
 	args := strings.Split(strings.TrimSpace(s), " ")
@@ -77,6 +98,10 @@ func (c *cmdActionDefinition) toAction(cmd []byte) *rotonde.Action {
 	return &action
 }
 
+/*
+ * actions definition store
+ */
+
 type cmdActionDefinitions []*cmdActionDefinition
 
 func (definitions cmdActionDefinitions) getCmdForActionIdentifier(identifier string) (*cmdActionDefinition, error) {
@@ -102,6 +127,10 @@ func addCmdAction(name string, definition rotonde.Definition) {
 	cmdActions = append(cmdActions, &cmdAction)
 }
 
+/**
+ * wraps a definition, adds a isDefinitionFor method which matches based on fields.
+ */
+
 type serialEvent struct {
 	rotonde.Definition
 }
@@ -123,7 +152,13 @@ func addEvent(definition *rotonde.Definition) {
 var cmdActions cmdActionDefinitions
 var events []*serialEvent
 
+/**
+ * Initializes all events and actions that will go through
+ */
 func init() {
+
+	// actions
+
 	cmdActions = make([]*cmdActionDefinition, 0, 10)
 
 	list := &rotonde.Definition{Identifier: "SERIAL_LIST", Type: "action"}
@@ -191,6 +226,8 @@ func init() {
 	programFromUrl.PushField("arch", "string", "")
 	programFromUrl.PushField("url", "string", "")
 	addCmdAction("programfromurl", *programFromUrl)
+
+	// events
 
 	events = make([]*serialEvent, 0, 10)
 
@@ -267,7 +304,6 @@ func init() {
 	portList := &rotonde.Definition{Identifier: "SERIAL_PORTLIST", Type: "event"}
 	portList.PushField("SerialPorts", "", "")
 	addEvent(portList)
-
 }
 
 /**
@@ -320,7 +356,7 @@ loop:
 		e := make(map[string]interface{})
 		err := json.Unmarshal(message, &e)
 		if err != nil {
-			log.Println("Unmarshal error", err)
+			log.Println("Unmarshal error", err, string(message))
 		}
 
 		for _, event := range events {
@@ -340,7 +376,7 @@ loop:
 				continue loop
 			}
 		}
-		log.Println("unknown event", e)
+		log.Println("unknown event", string(message))
 
 	}
 	c.ws.Close()
