@@ -3,7 +3,7 @@ Rotonde fork
 
 This fork brings compatibility with [rotonde](https://github.com/HackerLoop/rotonde), and cleans the API in the process.
 
-All features from the excellent [SPJS](https://github.com/johnlauer/serial-port-json-server) are now available through rotonde in a clean json API.
+All features from [SPJS](https://github.com/johnlauer/serial-port-json-server) are now available through rotonde in a clean json API.
 
 Please read the README of rotonde before going further. [here](https://github.com/HackerLoop/rotonde).
 
@@ -54,7 +54,7 @@ TODO: explain buffer algorithms
 }
 ```
 
-SERIAL_SENDJSON: TODO link to documentation in SPJS
+SERIAL_SENDJSON: please check this [documentation](https://github.com/johnlauer/serial-port-json-server/wiki) for instruction for the `json` field.
 ```
 {  
    "type":"def",
